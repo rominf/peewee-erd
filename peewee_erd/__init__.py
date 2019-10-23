@@ -74,7 +74,7 @@ class DrawOnFileChangesHandler(FileSystemEventHandler):
             self,
             paths_of_models_files: Collection[Union[Path, str]],
             draw_function: Callable,
-            svg_widget: QSvgWidget,
+            svg_widget: 'QSvgWidget',
             output: Union[Path, str],
     ):
         self._draw_function = draw_function
