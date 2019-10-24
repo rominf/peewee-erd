@@ -2,14 +2,15 @@
 """peewee ERD.
 
 Usage:
-  peewee-erd [--output=<file>] [--main-color=<color>] [--bg-color=<color>] <path_of_models_file>...
+  peewee-erd [--output=<file>] [--main-color=<color>] [--bg-color=<color>] [--font-size=<pt>] <path_of_models_file>...
   peewee-erd -h | --help
 
 Options:
   -h --help                  Show this screen.
+  -o=<file> --output=<file>  Save generated model to file (disables [live] view).
   --main-color=<color>       Main color used for models background and fields names [default: #0b7285].
   --bg-color=<color>         Background of models [default: #e3fafc].
-  -o=<file> --output=<file>  Save generated model to file (disables live preview).
+  --font-size=<pt>           Font size [default: 12].
 """
 import time
 from contextlib import suppress
@@ -67,6 +68,7 @@ class Relation:
 class Graph:
     models: List[Model]
     relations: List[Relation]
+    font_size: int
 
 
 class DrawOnFileChangesHandler(FileSystemEventHandler):
@@ -93,9 +95,10 @@ class DrawOnFileChangesHandler(FileSystemEventHandler):
 
 def draw(
         paths_of_models_files: Collection[Union[Path, str]],
+        output: Union[Path, str],
         main_color: str,
         bg_color: str,
-        output: Union[Path, str],
+        font_size: int,
         view: bool,
         cleanup: bool,
 ):
@@ -150,7 +153,11 @@ def draw(
             ))
 
     graph_template = Template(open(Path(__file__).parent / 'erd.dot').read())
-    graph_dot = graph_template.render(graph=Graph(models=models, relations=relations))
+    graph_dot = graph_template.render(graph=Graph(
+        models=models,
+        relations=relations,
+        font_size=font_size,
+    ))
 
     # Render graph
     output = Path(output)
@@ -228,6 +235,7 @@ def main():
         paths_of_models_files=paths_of_models_files,
         main_color=args['--main-color'],
         bg_color=args['--bg-color'],
+        font_size=int(args['--font-size']),
         output=output,
         view=view,
         cleanup=not view,
@@ -239,7 +247,7 @@ def main():
             paths_of_models_files=paths_of_models_files,
             output=output,
         )
-    else:
+    if view:
         with suppress(KeyboardInterrupt):
             while True:
                 time.sleep(1)

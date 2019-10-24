@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "peewee-erd"
-version = "0.1.1"
+version = "0.1.2"
 description = "Draw the ER diagram based on peewee models."
 authors = ["Roman Inflianskas <infroma@gmail.com>"]
 license = "Apache-2.0"
