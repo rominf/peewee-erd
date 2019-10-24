@@ -23,13 +23,18 @@ $ pip install peewee-erd[live-view]
 Usage
 -----
 
-To draw the diagram, display, and update it on file changes, run it with the path of models file:
+To draw the diagram run it with the path of models file:
 ```shell
-$ PATH_OF_MODELS_FILE=...
-$ peewee-erd $PATH_OF_MODELS_FILE
+$ peewee-erd <paths_of_models_files>...
 ```
 
-For more other variants of usage see help:
+For other variants of usage see help:
 ```shell
 $ peewee-erd --help
 ```
+
+Example output
+--------------
+
+This is the ER diagram generated for [conceptnet-lite](https://github.com/ldtoolkit/conceptnet-lite):
+![ER diagram for conceptnet-lite](https://raw.githubusercontent.com/ldtoolkit/conceptnet-lite/master/docs/source/_static/erd.svg?sanitize=true)
