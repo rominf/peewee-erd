@@ -38,7 +38,6 @@ from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 import graphviz
 import peewee
-import poetry_version
 
 
 @dataclass
@@ -221,8 +220,7 @@ def start_live_view(
 
 
 def main():
-    version = poetry_version.extract(source_file=__file__)
-    args = docopt(__doc__, version=version)
+    args = docopt(__doc__)
     paths_of_models_files = [Path(path_of_models_file) for path_of_models_file in args['<path_of_models_file>']]
     output = args['--output']
     view = output is None and not PYSIDE2_AVAILABLE
